@@ -14,6 +14,24 @@ class Solution {
         }
         return true;
     }
+
+    bool bfs(vector<vector<int>> adj,vector<int> &visited,int source){
+        queue<int> q;
+        visited[source] = 0;
+        q.push(source);
+
+        while(!q.empty()){
+            int node = q.front();q.pop();
+            int color = visited[node];
+            for(auto neigh:adj[node]){
+                if(visited[neigh] == -1){
+                    visited[neigh] == 1-color;
+                    q.push(neigh);
+                }else if(visited[neigh] == color)return false;
+            }
+        }
+        return true;
+    }
     
     bool isBipartite(int V, vector<vector<int>> &edges) {
         vector<vector<int>> adj(V);
