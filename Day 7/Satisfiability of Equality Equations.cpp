@@ -1,5 +1,6 @@
+//leetcode no 990. best use of union find.
 
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 class DisjointSet{
@@ -34,28 +35,19 @@ public:
         }
     }
 };
+class Solution {
+public:
+    bool equationsPossible(vector<string>& equations) {
+        DisjointSet ds(26);
+        
+        for(auto s:equations){
+            if(s[1] == '=')ds.Union(s[0]-'a',s[3]-'a');
+        }
 
-int main() {
-    DisjointSet ds(7);
-    
-    ds.Union(1, 2);
-    ds.Union(2, 3);
-    ds.Union(4, 5);
-    ds.Union(6, 7);
-    ds.Union(5, 6);
+        for(auto s:equations){
+            if(s[1] == '!' && ds.find(s[0]-'a') == ds.find(s[3]-'a')) return false;
+        }
 
-    // check if 3 and 7 are in same set
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
+        return true;
     }
-
-    ds.Union(3, 7);
-
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
-    }
-}
+};

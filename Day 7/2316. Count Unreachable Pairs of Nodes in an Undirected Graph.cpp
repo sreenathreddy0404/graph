@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -35,27 +34,27 @@ public:
     }
 };
 
-int main() {
-    DisjointSet ds(7);
-    
-    ds.Union(1, 2);
-    ds.Union(2, 3);
-    ds.Union(4, 5);
-    ds.Union(6, 7);
-    ds.Union(5, 6);
+class Solution {
+public:
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        DisjointSet ds(n);
 
-    // check if 3 and 7 are in same set
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
+        for(auto e:edges){
+            ds.Union(e[0],e[1]);
+        }
+
+        unordered_map<int,int> hashmap;
+        for(int i=0;i<n;i++){
+            hashmap[ds.find(i)]++;
+        }
+
+        long long rem = n;
+        long long ans = 0;
+        for(auto k:hashmap){
+            rem -= k.second;
+            ans += rem * k.second;
+        }
+
+        return ans;
     }
-
-    ds.Union(3, 7);
-
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
-    }
-}
+};

@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -35,27 +34,21 @@ public:
     }
 };
 
-int main() {
-    DisjointSet ds(7);
-    
-    ds.Union(1, 2);
-    ds.Union(2, 3);
-    ds.Union(4, 5);
-    ds.Union(6, 7);
-    ds.Union(5, 6);
+class Solution {
+public:
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        int E = connections.size();
+        if(n > E+1) return -1;
 
-    // check if 3 and 7 are in same set
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
+        DisjointSet ds(n);
+        for(auto &c:connections){
+            ds.Union(c[0],c[1]);
+        }
+
+        int count = -1;
+        for(int i=0;i<n;i++){
+            if(i == ds.find(i))count++;
+        }
+        return count;
     }
-
-    ds.Union(3, 7);
-
-    if (ds.find(3) == ds.find(7)) {
-        cout << "Same Set\n";
-    } else {
-        cout << "Different Set\n";
-    }
-}
+};
